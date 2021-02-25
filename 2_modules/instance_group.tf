@@ -1,5 +1,4 @@
-
-
+## RESOURCE MODULES
 module "instance_template" {
   source             = "terraform-google-modules/vm/google//modules/instance_template"
   project_id         = var.project_id
@@ -7,3 +6,4 @@ module "instance_template" {
   service_account    = var.service_account
   subnetwork_project = var.project_id
 }
+
