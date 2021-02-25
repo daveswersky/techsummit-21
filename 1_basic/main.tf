@@ -12,7 +12,7 @@ variable "zone" {
 }
 
 variable "network_name" {
-  default = "vm_network"
+  default = "vm-network"
 }
 
 ## PROVIDER
@@ -39,7 +39,7 @@ resource "google_compute_subnetwork" "default" {
 resource "google_compute_instance" "vm_instance" {
   name         = "terraform-instance"
   machine_type = "f1-micro"
-
+  
   boot_disk {
     initialize_params {
       image = "debian-cloud/debian-9"
@@ -48,7 +48,8 @@ resource "google_compute_instance" "vm_instance" {
 
   network_interface {
     # A default network is created for all GCP projects
-    network = "default"
+    network = google_compute_network.default.self_link
+    subnetwork = google_compute_subnetwork.default.self_link
     access_config {
     }
   }
