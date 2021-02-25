@@ -36,6 +36,22 @@ resource "google_compute_subnetwork" "default" {
   private_ip_google_access = true
 }
 
+resource "google_compute_firewall" "default" {
+  name    = "test-firewall"
+  network = google_compute_network.default.self_link
+
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "8080", "1000-2000", "22"]
+  }
+
+  source_tags = ["web"]
+}
+
 resource "google_compute_instance" "vm_instance" {
   name         = "terraform-instance"
   machine_type = "f1-micro"
@@ -51,8 +67,7 @@ resource "google_compute_instance" "vm_instance" {
     network = google_compute_network.default.self_link
     subnetwork = google_compute_subnetwork.default.self_link
     access_config {
-      protocol = "tcp"
-      ports = ["22"]
+  
     }
   }
 }
