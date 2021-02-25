@@ -51,6 +51,8 @@ resource "google_compute_instance" "vm_instance" {
     network = google_compute_network.default.self_link
     subnetwork = google_compute_subnetwork.default.self_link
     access_config {
+      protocol = "tcp"
+      ports = ["22"]
     }
   }
 }
