@@ -5,15 +5,12 @@ provider "google" {
   zone    = var.zone
 }
 
-module "gcs_buckets" {
-  source  = "terraform-google-modules/cloud-storage/google"
-  version = "~> 1.7"
-  project_id  = var.project_id
-  name = "${var.project_id}-tfstate"
-  prefix = "tf-backend"
-  set_admin_roles = true
-  admin = ["user:admin@daveswersky.altostrat.com"]
-  versioning = {
-    first = true
-  }
+module "bucket" {
+  source  = "terraform-google-modules/cloud-storage/google//modules/simple_bucket"
+  version = "~> 1.3"
+
+  name       = "${var.project_id}-tfstate"
+  project_id = var.project_id
+  location   = var.region
+  
 }
