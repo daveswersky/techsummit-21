@@ -1,6 +1,6 @@
 ## VARIABLES
 variable "project_id" {
-  default = "primaryproject-305315"
+  default = "terraform-demo-306115"
 }
 
 variable "region" {
